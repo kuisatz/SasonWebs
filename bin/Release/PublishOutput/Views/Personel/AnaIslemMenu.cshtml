@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Teknisyen";
+    Layout = "~/Views/Personel/_TeknisyenMenuLayout.cshtml";
+}
+
+@(Html.DevExtreme().ActionSheet()
+    .Title("Genel İşlemler")
+    .ID("actionSheet")
+    .DataSource(SasonWebs.Attributes.Statics.GetActionList())
+    .OnCancelClick("actionCancel_click")
+    .Visible(true)
+)
+
+
+<script>
+    function actionCancel_click() {
+        //alert("Cancelled");
+        window.location.href = "@Url.Action("Test","Personel")";
+    }
+</script>

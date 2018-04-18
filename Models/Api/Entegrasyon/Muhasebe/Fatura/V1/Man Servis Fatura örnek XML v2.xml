@@ -1,0 +1,203 @@
+<tb:BelgeSicil BelgeTuru="ONARIM"> -- servis faturası
+  <tb:Baslik>
+	 <ARAC_KODU>333151</ARAC_KODU> 				<!-- Araçın Kodu --> <!-- ARACIN SERVİS SİSTEMİNDEKİ KAYIT NUMARASI MI? ZORUNLU MU ? -->
+	<DEPO_KODU>IZMIR</DEPO_KODU> 				<!-- VAR--> <!-- Faturanın kesildği parçanın çıktığı depo --> <!-- Eğer her şube için ayrı ayrı bir web servis olacak ise gerek yok --> <!-- ZORUNLU MU?? -->	
+	<DOVKOD />  								<!-- VAR--> <!-- Döviz Cinsi Dolar, Euro  --> <!-- Alan olmak zorunda   -->
+	<DOVKUR>0</DOVKUR> 							<!-- VAR--> <!-- Döviz kuru  --> <!-- Alan Olmak zorunda -->
+	<EFDURUM /> 								<!-- Faturanın e-Fatura olup olmadığını ifade eder --> <!-- Alan olmak zorunda eğer cari bilgisi ile gelecek ise burada olmaya bilir  -->
+	<EXTTUT>0</EXTTUT> 							<!-- Alan olmak zorunda değil  -->   
+	<GUN>0</GUN> 								<!-- MÜŞTERİYE DİREK SATIŞTA VAR İŞ EMRİNDE YOK --> <!-- Fatura Vade Bilginisini ifade eder   -->  <!-- Alan olmak zorunda   -->
+	<IPTAL /> 									<!-- YOK --> <!-- Faturanın iptal edilip edilmediği bilgisi --> <!-- Alan olmak zorunda   -->
+	<IRS_NOTU /> 								<!-- Faturaya bağlı irsaliye açıklamasını getirir  --> <!-- Alan olmak zorunda  değil -->
+	<IS_TURU>MEKANİK/ELK</IS_TURU>				<!--  Yapılan İş Türünü ifade ediyor  Örnek : BAKIM,KAZALI ARAÇ gibi bütün servis iş türü tek seferde ayrımı olmadan gelebilir  --> <!-- Alan olmak zorunda değil  -->
+	<ISC_TUTG>0</ISC_TUTG> 						<!-- ???? --> <!-- Faturanın İşçilik Tutarını ifade eder -  aksiyon mu yoksa sadece işçilik mi olup olmadığı bulmak için kulladığımız bir alan   --> <!-- Alan olmak zorunda  -->
+	<ISC_TUTN>30</ISC_TUTN> 					<!-- ???? --> <!-- Faturanın İşçilik Net Tutarını ifade eder -  aksiyon mu yoksa sadece işçilik mi olup olmadığı bulmak için kulladığımız bir alan   --> <!-- Alan olmak zorunda  -->
+	<ISLEMYERI>01-Servis</ISLEMYERI> 			<!-- VAR--> <!-- Faturanın türünü tespit etmek için kullanıyoruz Örnek Satış Faturası mı ve ya servis faturasımı ona göre kodlama kısmını belirliyoruz   --> <!-- Onarım Faturaları ayrı bir web servis ile gelecek ise olmak zorunda değil  tek bir web servis ile gelecek ise OLMAK zorunda-->
+	<ISYERI>IZMIR</ISYERI>  					<!-- ??? --> <!-- Faturanın kesildği parçanın şubesi --> <!-- Eğer her şube için ayrı ayrı bir web servis olacak ise gerek yok -->
+	<KDV_DHY>H</KDV_DHY> 						<!-- YOK --> <!-- Faturanın KDV Bilgisi Örnek : Hariç ve ya dahil --> <!-- Alan olmak zorunda   -->
+	<KISA_SASI>06X9B20</KISA_SASI> 				<!-- Faturaya bağlı araçın Kısa Şasi bilgisi Örnek:06X9B20 --> <!-- Alan olmak zorunda  değil -->
+	<MARKASI>MAN</MARKASI> 						<!-- Faturaya bağlı araçın Marka bilgisi Örnek :MAN --> <!-- Alan olmak zorunda  değil -->
+	<MODEL>0</MODEL> 							<!-- Faturaya bağlı araçın model bilgisi Örnek: 2017 --> <!-- Alan olmak zorunda  değil -->
+	<MUHNOSU>84005</MUHNOSU> 					<!-- FATURANO VAR AMA DB YE KAYIT ETMIYORUZ, FATIH SOR, E-FATURA NO YOK --><!-- Resmi Fatura Numarası ve Resmi e-Fatura numrası  --> <!-- Alan olmak zorunda -->  
+	<NETTUT>284.04</NETTUT>  					<!-- VAR--><!-- Faturanın Net Tutarını ifade eder	-->  <!-- Alan olmak zorunda -->
+	<NOSU>84005</NOSU>  						<!-- FATIH SOR--><!-- Faturanın  Muhasebe Modülündeki numarasını ifade eder --> <!-- Yeni yazılımda Muhasebe Modulu var ise Alan olmak zorunda -->
+	<ODETAR>03.01.2017 00:00:00</ODETAR>		<!-- YOK--><!-- Faturanın Vade Tarihi ifade eder --> <!-- Alan olmak zorunda -->	
+	<ONARIM_NO>201700004</ONARIM_NO>			<!-- VAR--><!-- Faturaya bağlı İş Emri Numrası ifade eder --> <!-- Alan olmak zorunda -->
+	<ONRNOTU />									<!-- FATIH SOR --><!-- Faturanın açıklamalarını ifade eder --> <!-- e-Fatura açıklmaları için Alan olmak zorunda -->
+	<PAR_TUTG>0</PAR_TUTG> 						<!-- GAMZE,FATIH SOR--><!-- Faturanın Parça Tutarını ifade eder -  aksiyon mu yoksa sadece işçilik mi olup olmadığı bulmak için kulladığımız bir alan   --> <!-- Alan olmak zorunda  -->
+	<PAR_TUTN>258.54</PAR_TUTN> 				<!-- GAMZE,FATIH SOR--><!-- Faturanın Parça Net Tutarını ifade eder -  aksiyon mu yoksa sadece işçilik mi olup olmadığı bulmak için kulladığımız bir alan   --> <!-- Alan olmak zorunda  -->
+	<PLAKA>26 LF 044</PLAKA>					<!-- VAR --><!-- Faturaya bağlı araçın plakasını ifade eder --> <!-- Alan olmak zorunda -->
+	<RENK />									<!-- Faturaya bağlı araçın rengini  ifade eder --> <!-- Alan olmak zorunda  değil-->
+	<RESBEL>E</RESBEL>							<!-- Alan olmak zorunda  değil-->
+	<SAAT>17:25:07</SAAT>						<!-- Faturanın kesildiği saat bilgisi --> <!-- Alan olmak zorunda  değil-->
+	<SASI_NO>WMA06XZZ4DM610686</SASI_NO>		<!-- VAR --><!-- Faturaya bağlı araçın  şasi bilgisi --> <!-- Alan olmak zorunda -->
+	<TARIH>03.01.2017 00:00:00</TARIH>			<!-- VAR --><!-- Faturanın Tarihi --> <!-- Alan olmak zorunda -->
+	<TESLIM_ALAN>MUSTAFA GÜNER</TESLIM_ALAN>	<!-- YOK, GAMZE SOR --><!-- Faturayı teslim alan bilgisi --> <!-- Alan olmak zorunda -->
+	<TESLIM_EDEN>SABRİYE MUTLUCAN</TESLIM_EDEN>	<!-- YOK, GAMZE SOR --><!-- Faturayı teslim eden bilgisi --> <!-- Alan olmak zorunda -->
+	<TIPI>TGS 18.400 (4X2) BLS</TIPI>			<!-- Faturaya bağlı araçın adı --> <!-- Alan olmak zorunda değil-->
+	<TKDVYZ>0</TKDVYZ> 							<!-- YOK --><!-- Faturada tevkifat oranı fatura tevkifatlı ise olmak zorunda --> <!-- Alan olmak zorunda -->
+	<VD />										<!-- VAR--><!-- Faturaya Bağlı carinin vergi dairesi --> <!-- Alan olmak zorunda eğer cari bilgisi ile gelecek ise burada olmaya bilir   -->	
+	<VDN>23533096180</VDN>						<!-- VAR--><!-- Faturaya Bağlı carinin vergi numarasını --> <!-- Alan olmak zorunda eğer cari bilgisi ile gelecek ise burada olmaya bilir   -->	
+  </tb:Baslik>
+  <tb:BaslikNot />
+  <tb:Dipnot />
+  <tb:SatirDetay>
+	<tb:Item>
+	  <BIRIM>12.5</BIRIM>						<!-- VAR--><!-- Fatura Kaleminin birim fiyatı --> <!-- Alan olmak zorunda -->	
+	  <BIRIMO>ADET</BIRIMO>						<!-- VAR--><!-- Fatura Kaleminin birim türü Örnek: adet, metre, litre gibi --> <!-- Alan olmak zorunda -->	
+	  <DEPO_KODU>IZMIR</DEPO_KODU>				<!-- Fatura Kaleminin depo kodu --> <!-- Alan olmak zorunda değil-->		
+	  <GARANTI />								<!-- GAMZE SOR --><!-- Fatura Kaleminin Garanti tipi--> <!-- Alan olmak zorunda-->	
+	  <GRN_YUZDESI>0</GRN_YUZDESI>				<!-- GAMZE SOR --><!-- Fatura Kaleminin Garanti yüzdesi--> <!-- Alan olmak zorunda-->
+	  <IND1>0</IND1>							<!-- YOK, TEK INDIRIM ALANIMIZ VAR, GAMZE SOR --><!-- Fatura Kaleminin İndirimi birden fazla iskonto olabilir bu nedenle zorunludur --> <!-- Alan olmak zorunda-->
+	  <IND2>0</IND2>							<!-- YOK, TEK INDIRIM ALANIMIZ VAR, GAMZE SOR --><!-- Fatura Kaleminin İndirimi birden fazla iskonto olabilir bu nedenle zorunludur --> <!-- Alan olmak zorunda-->
+	  <IND3>0</IND3>							<!-- YOK, TEK INDIRIM ALANIMIZ VAR, GAMZE SOR --><!-- Fatura Kaleminin İndirimi birden fazla iskonto olabilir bu nedenle zorunludur --> <!-- Alan olmak zorunda-->
+	  <ISCPAR>P</ISCPAR>						<!-- VAR --><!-- Fatura Kaleminin Yedek Parça mı yoksa İşçilik olup olmadığını ifade eder Örnek P Parça , İ İşçilik--> <!-- Alan olmak zorunda önemli-->	
+	  <ISTUR>MEKANİK/ELK</ISTUR>				<!-- Alan olmak zorunda değil-->
+	  <ISYERI>IZMIR</ISYERI>					<!-- Alan olmak zorunda değil-->
+	  <KDVY>18</KDVY>							<!-- VAR --> <!-- Fatura Kaleminin KDV Bilgisi Örnek : 8,18,1--> <!-- Alan olmak zorunda-->
+	  <KESIN>E</KESIN>							<!-- Alan olmak zorunda değil-->
+	  <MIKTAR>1</MIKTAR>						<!-- VAR --><!-- Fatura Kaleminin Miktarı --> <!-- Alan olmak zorunda-->
+	  <MUSTAL />								<!-- VAR, FUNDA & GAMZE SOR --><!-- Paket olarak yapılan işlemlerde bazı parçaların müşteri sebebi ile araça takılmadığı zaman dolu gelen bir alan --> <!--Yeni yazılımda böyle bir durum var ise olmak zorunda Alan olmak zorunda-->
+	  <ONADI>DUYGU HEPORAK</ONADI>				<!-- BU KIM ? GAMZE SOR --><!-- Faturaya bağlı onarımı onaylan kişi  --> <!-- Alan olmak zorunda-->
+	  <ONARIM_NO>201700004</ONARIM_NO>			<!-- Faturaya bağlı onarım numarasını --> <!-- Alan olmak zorunda değil-->
+	  <SICIL_ADI>PARÇA TEMİZLEYİCİSİ</SICIL_ADI><!-- VAR --><!-- Fatura Kaleminin Adi --> <!-- Alan olmak zorunda-->
+	  <SICIL_KODU>900.0003Y</SICIL_KODU>		<!-- VAR --><!-- Fatura Kaleminin Kodu --> <!-- Alan olmak zorunda-->
+	  <SINIF />									<!-- Fatura Kaleminin MANTRAS'daki sınıf bilgisi --> <!-- Alan olmak zorunda değil-->
+	  <TC>TRL</TC>								<!-- YUKARDA KUR BILGISI VAR IKEN BURADA KUR BILGISININ MANASI NE ? YUKARDAKI ILE AYNI OLMAK ZORUNDA DEGIL MI BURASI ? GAMZE ? --><!-- Fatura Kaleminin Döviz Tipi --> <!-- Alan olmak zorunda-->
+	</tb:Item>
+	<tb:StokSicil>
+	  <ALIS_KDVY>18</ALIS_KDVY>					<!-- Fatura Kaleminin KDV --> <!--MANTRAS otomatik olarak gönderiyor  Alan olmak zorunda değil-->
+	  <BIRIM>ADET</BIRIM>						<!-- Fatura Kaleminin Birim --> <!--MANTRAS otomatik olarak gönderiyor  Alan olmak zorunda değil-->	
+	  <ISYERI />								<!-- Fatura Kaleminin İşyeri --> <!--MANTRAS otomatik olarak gönderiyor  Alan olmak zorunda değil-->
+	  <MALZEME_TIPI />							<!-- Fatura Kaleminin KDV --> <!--MANTRAS otomatik olarak gönderiyor  Alan olmak zorunda değil-->
+	  <SATIS_KDVY>18</SATIS_KDVY>				<!-- Fatura Kaleminin KDV --> <!--MANTRAS otomatik olarak gönderiyor  Alan olmak zorunda değil-->
+	  <SICIL_ADI>PARÇA TEMİZLEYİCİSİ</SICIL_ADI><!-- Fatura Kaleminin Adı --> <!--MANTRAS otomatik olarak gönderiyor  Alan olmak zorunda değil-->
+	  <SICIL_KODU>900.0003Y</SICIL_KODU>		<!-- Fatura Kaleminin Kod --> <!--MANTRAS otomatik olarak gönderiyor  Alan olmak zorunda değil-->
+	</tb:StokSicil>
+	<tb:HizmasSicil />
+  </tb:SatirDetay>
+  <tb:SatirDetay>
+	<tb:Item>
+	  <BIRIM>246.04</BIRIM>
+	  <BIRIMO>ADET</BIRIMO>
+	  <DEPO_KODU>IZMIR</DEPO_KODU>
+	  <GARANTI />
+	  <GRN_YUZDESI>0</GRN_YUZDESI>
+	  <IND1>0</IND1>
+	  <IND2>0</IND2>
+	  <IND3>0</IND3>
+	  <ISCPAR>P</ISCPAR>
+	  <ISTUR>MEKANİK/ELK</ISTUR>
+	  <ISYERI>IZMIR</ISYERI>
+	  <KDVY>18</KDVY>
+	  <KESIN>E</KESIN>
+	  <MIKTAR>1</MIKTAR>
+	  <MUSTAL />
+	  <ONADI>DUYGU HEPORAK</ONADI>
+	  <ONARIM_NO>201700004</ONARIM_NO>
+	  <SICIL_ADI>KASET RADYAL MIL YAG KEÇESI 132X172X12WD</SICIL_ADI>
+	  <SICIL_KODU>81.96503.0333</SICIL_KODU>
+	  <SINIF />
+	  <TC>TRL</TC>
+	</tb:Item>
+	<tb:StokSicil>
+	  <ALIS_KDVY>18</ALIS_KDVY>
+	  <BIRIM>ADET</BIRIM>
+	  <ISYERI />
+	  <MALZEME_TIPI />
+	  <SATIS_KDVY>18</SATIS_KDVY>
+	  <SICIL_ADI>KASET RADYAL MIL YAG KEÇESI 132X172X12WD</SICIL_ADI>
+	  <SICIL_KODU>81.96503.0333</SICIL_KODU>
+	</tb:StokSicil>
+	<tb:HizmasSicil />
+  </tb:SatirDetay>
+  <tb:SatirDetay>
+	<tb:Item>
+	  <BIRIM>100</BIRIM>
+	  <BIRIMO>SAAT</BIRIMO>
+	  <DEPO_KODU />
+	  <GARANTI />
+	  <GRN_YUZDESI>0</GRN_YUZDESI>
+	  <IND1>15</IND1>
+	  <IND2>0</IND2>
+	  <IND3>0</IND3>
+	  <ISCPAR>İ</ISCPAR>
+	  <ISTUR>MEKANİK</ISTUR>
+	  <ISYERI>IZMIR</ISYERI>
+	  <KDVY>18</KDVY>
+	  <KESIN>E</KESIN>
+	  <MIKTAR>0.3</MIKTAR>
+	  <MUSTAL />
+	  <ONADI>DUYGU HEPORAK</ONADI>
+	  <ONARIM_NO>201700004</ONARIM_NO>
+	  <SICIL_ADI>PORYA-SOK, TAK</SICIL_ADI>
+	  <SICIL_KODU>022A0203610000Q7</SICIL_KODU>
+	  <SINIF />
+	  <TC>TRL</TC>
+	</tb:Item>
+	<tb:StokSicil />
+	<tb:DegSicil />
+	<tb:HizmasSicil />
+  </tb:SatirDetay>
+  <tb:SatirDetay>
+	<tb:Item>
+	  <BIRIM>100</BIRIM>
+	  <BIRIMO>SAAT</BIRIMO>
+	  <DEPO_KODU />
+	  <GARANTI />
+	  <GRN_YUZDESI>0</GRN_YUZDESI>
+	  <IND1>0</IND1>
+	  <IND2>0</IND2>
+	  <IND3>0</IND3>
+	  <ISCPAR />
+	  <ISTUR>MEKANİK</ISTUR>
+	  <ISYERI>IZMIR</ISYERI>
+	  <KDVY>18</KDVY>
+	  <KESIN>E</KESIN>
+	  <MIKTAR>0</MIKTAR>
+	  <MUSTAL />
+	  <ONADI>DUYGU HEPORAK</ONADI>
+	  <ONARIM_NO>201700004</ONARIM_NO>
+	  <SICIL_ADI>MUAYENE DEFTERI-HAZIRLA</SICIL_ADI>
+	  <SICIL_KODU>WA1A080636000000</SICIL_KODU>
+	  <SINIF />
+	  <TC>TRL</TC>
+	</tb:Item>
+	<tb:StokSicil />
+	<tb:DegSicil />
+	<tb:HizmasSicil />
+  </tb:SatirDetay>
+  <tb:CariSicil> <!-- BURALARI ISTEMIYORLAR MI ? --> 
+	<CR_ACIK1 />
+	<CR_ACTAR>03.11.2016 00:00:00</CR_ACTAR>
+	<CR_ADRES1>KIRKA MH.MUSTAFA KEMAL CAD.NO:134</CR_ADRES1>
+	<CR_ADRES2 />
+	<CR_ADRES3>SEYİTGAZİ/ESKİŞEHİR</CR_ADRES3>
+	<CR_CARI_ADI1>CAVİT AKKAŞ</CR_CARI_ADI1>
+	<CR_CARI_ADI2 />
+	<CR_CARI_NO>120 35 00185</CR_CARI_NO>
+	<CR_EFPK />
+	<CR_EMAIL />
+	<CR_FAKS />
+	<CR_GSM1>00000000000</CR_GSM1>
+	<CR_GUN>0</CR_GUN>
+	<CR_ILCE>SEYİTGAZİ</CR_ILCE>
+	<CR_ILGILI />
+	<CR_ILGITEL />
+	<CR_ILI>ESKİŞEHİR</CR_ILI>
+	<CR_OZEL_KOD />
+	<CR_TEL1>05325800499</CR_TEL1>
+	<CR_TEL2 />
+	<CR_TIPI>Özel</CR_TIPI>
+	<CR_TURU>Müşteri</CR_TURU>
+	<CR_ULKE>TÜRKİYE</CR_ULKE>
+	<CR_VERGI_DA />
+	<CR_VERGI_NO>23533096180</CR_VERGI_NO>
+	<CR_WWW />
+	<EFATURA>0</EFATURA>
+  </tb:CariSicil>
+  <tb:SevkYeri />
+  <tb:Irsaliye />
+  <tb:Siparis />
+  <tb:IsEmri />
+</tb:BelgeSicil>

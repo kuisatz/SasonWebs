@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Malzemeler";
+    Layout = "~/Views/Teknisyen/_TeknisyenMenuLayout.cshtml";
+}
+
+<h1>İş Emir İşlem Malzemeler</h1>
+
+
+@(Html.DevExtreme().Popup()
+    .ID("girisPopup")
+    .Title("Popup Title")
+    .Visible(true)
+    .ContentTemplate(@<text>
+        @(Html.DevExtreme().DataGrid()
+            .ID("gridIslemMalzemeler")
+            .Height("100%")
+            .DataSource(d => d.WebApi().Controller("IsEmirleri").LoadAction("IsEmirIslemMalzemeler").LoadParams(new { id = @ViewData["IsEmirIslemId"] }).Key("ID"))
+            .Columns(columns =>
+            {
+                columns.Add().DataField("SERVISSTOKKOD").Caption("Stok Kodu");
+                columns.Add().DataField("SERVISSTOKAD").Caption("Stok Adı");
+                //columns.Add().DataField("SERVISSTOKID").Caption("Servis Stok Id").Width(100);
+                //columns.Add().DataField("TUTAR").Caption("Tutar");
+            })
+            .OnRowClick("ongridIslemMalzemeler_click")
+            .HoverStateEnabled(true)
+        )
+    </text>)
+)
+
+<script>
+    function ongridIslemMalzemeler_click(a) {
+        //debugger;
+        var popup = $("#girisPopup").dxPopup("instance").option("visible", true);
+    }
+</script>

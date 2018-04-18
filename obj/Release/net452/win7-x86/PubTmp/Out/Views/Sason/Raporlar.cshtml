@@ -1,0 +1,174 @@
+﻿@{
+    ViewData["Title"] = "Raporlar";
+    Layout = "~/Views/Sason/_EmptyLayout.cshtml";
+    var servisId = ViewData["ServisId"];
+}
+
+<head>
+    @*<link href="~/css/devextreme/dx.dark.css" rel="stylesheet" />*@
+</head>
+
+<style>
+    .widget-container {
+        margin-right: 320px;
+        padding: 20px;
+        max-width: 550px;
+        min-width: 300px;
+    }
+
+    #formx {
+        margin-top: 25px;
+    }
+
+    .options {
+        padding: 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 400px;
+        top: 0;
+        background-color: #f5f5f5;
+        overflow-y: scroll;
+        overflow: -moz-scrollbars-vertical;
+    }
+
+    .caption {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .option {
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+    .dx-datagrid-rowsview {
+        font-size: 10px;
+        /*background-color: darkgray;*/
+        /*color: yellow;*/
+    }
+</style>
+
+<script>
+    function getGrid(objectName) { return $("#" + objectName).dxDataGrid("instance"); }
+    function getPopup(objectName) { return $("#" + objectName).dxPopup("instance"); }
+    function getWait() { return $("#loadPanel").dxLoadPanel("instance"); }
+    function getCombo(objectName) { return $("#" + objectName).dxSelectBox("instance"); }
+    function getDate(objectName) { return $("#" + objectName).dxDateBox("instance"); }
+    function getTextBox(objectName) { return $("#" + objectName).dxTextBox("instance"); }
+    function openWait() { getWait().option("visible", true); }
+    function closeWait() { getWait().option("visible", false); }
+    function openPopup(popupName, title) {
+        var popup = getPopup(popupName);
+        if (popup != null) {
+            popup.option("title", title);
+            popup.option("visible", true);
+        }
+    }
+</script>
+
+@(Html.DevExtreme().LoadPanel()
+        .ID("loadPanel")
+        .Message("Lütfen Bekleyin ...")
+        .CloseOnOutsideClick(false)
+        .Visible(false)
+)
+
+@(Html.DevExtreme().Popup()
+        .Title("Viewer")
+        .Width("95%")
+        .MaxHeight("98%")
+        .Height("98%")
+        .ID("popupPdfView")
+        .Visible(false)
+        .ContentTemplate(
+        @<text>
+        <iframe id="pdfViewer" width="100%" height="100%" frameborder="0" src="" style="position:relative;overflow:scroll"></iframe>
+        </text>
+            )
+)
+
+<div id="form-demo">
+    <div class="options">
+        <div class="option">
+            <span>Rapor Tipi</span>
+            @(Html.DevExtreme().SelectBox()
+                    .ValueExpr("Id")
+                    .DisplayExpr("Text")
+                    .ID("cmbReports")
+                    .OnValueChanged("cmbReports_valueChanged")
+            )
+        </div>
+        <div id="reportElements"></div>
+        <div id="reportScripts"></div>
+        <div class="option">
+            <button id="btnExecute" style="width:100%" onclick="btnExecute_onclick()">Rapor</button>
+            <button id="btnDownloadExcel" style="width:100%;margin-top:8px" onclick="btnDownloadExcel_onclick()">Excel Dosyası İndir</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnDownloadExcel").css("visibility", "Hidden");
+        action("Sason", "GetRaporlar", null, function (res) {
+            if (res.Ok) {
+                getCombo("cmbReports").option("dataSource", res.Data);
+            }
+        }
+        );
+    });
+
+    function cmbReports_valueChanged(data) {
+        jQuery.removeData(document.body, "ExcClientFile");
+        jQuery.removeData(document.body, "ExcServerFile");
+
+        $("#btnDownloadExcel").css("visibility", "Hidden");
+
+        jQuery.data(document.body, "SelectedReportKey", data.value);
+        action("Sason", "GetReportDetails", { reportKey: data.value }, function (res) {
+            if (res.Ok) {
+                $("#reportElements").html(res.Data.HtmlString);
+                $("#reportScripts").html(res.Data.JsString);
+                jQuery.data(document.body, "ReportParameterNames", res.Data.ParameterNames);
+            }
+        }
+        );
+    }
+
+    function btnExecute_onclick() {
+        var parameters = jQuery.data(document.body, "ReportParameterNames").split(",");
+        var parametersJson = "";
+        if (parameters.length > 0)
+        {
+            parametersJson = "{";
+            $.each(parameters, function (index, prm) {
+                var objvalue = jQuery.data(document.body, prm + '_value');
+                parametersJson += "'" + prm + "':" + "'" + objvalue + "'";
+                if (index < parameters.length - 1)
+                    parametersJson += ",";
+            });
+            parametersJson += "}";
+        }
+        openWait();
+        action("Sason", "ExecuteReport", { reportKey: jQuery.data(document.body, "SelectedReportKey"), parameters: parametersJson }, function (res) {
+            closeWait();
+            if (res.Ok) {
+
+                $("#btnDownloadExcel").css("visibility", "visible");
+
+                openPopup("popupPdfView", "Pdf");
+                $("#pdfViewer").attr("src", res.Data.PdfFile);
+                //$("#pdfViewer").attr("src", "http://mobile.okulsis.net:8000/jasperserver/rest_v2/reports/reports/bilsa/mobile/rapor/ogrenciSinavDetay.html?raporkey=OSS2647B34117AA405A8F2CFEC8F62198DD&j_username=joeuser&j_password=joeuser");
+
+                jQuery.data(document.body, "ExcClientFile", res.Data.ExcelServerSideFileName);
+                jQuery.data(document.body, "ExcServerFile", res.Data.ExcelClientSideFileName);
+            }
+        }
+        );
+    }
+
+    function btnDownloadExcel_onclick() {
+        window.location = '../sason/downloadfile?serverSideFileName=' + jQuery.data(document.body, "ExcClientFile") + '&clientFileName=' + jQuery.data(document.body, "ExcServerFile");
+    }
+</script>

@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Teknisyen";
+    Layout = "~/Views/Teknisyen/_TeknisyenMenuLayout.cshtml";
+}
+
+
+@*@(Html.DevExtreme().Popup()
+    .ID("popover")
+    .Title("Popup Title")
+    .Visible(true)
+    
+    .ContentTemplate(@<details>
+    @(Html.DevExtreme().TextArea())
+    @(Html.DevExtreme().ActionSheet()
+    .Title("Genel İşlemler")
+    .ID("actionSheet")
+    .DataSource(SasonWebs.Statics.GetActionList())
+    .OnCancelClick("actionCancel_click")
+    .OnItemClick("action_click")
+    .Visible(true))
+    </details>)
+)*@
+
+
+@*@(Html.DevExtreme().ActionSheet()
+    .Title("Genel İşlemler")
+    .ID("actionSheet")
+    .DataSource(SasonWebs.Statics.GetActionList())
+    .OnCancelClick("actionCancel_click")
+    .OnItemClick("action_click")
+    .Visible(true)
+)*@
+
+
+@*@(Html.DevExtreme().List()
+    .ID("list")
+    .DataSource(SasonWebs.Statics.GetListDataSource())
+    .Grouped(true)
+)*@
+
+@(Html.DevExtreme().TreeView()
+    .ID("simple-treeview")
+    .DataSource(d => d.Mvc().Controller("Teknisyen").LoadAction("GetActionList"))
+    .DisplayExpr("Text")
+    .ItemsExpr("Items")
+    .ExpandedExpr("Expanded")
+    .Width(300)
+    .OnItemClick("treeViewItemClick")
+)
+
+
+<script>
+    function actionCancel_click() {
+        //alert("Cancelled");
+        window.location.href = "@Url.Action("Test","Teknisyen")";
+    }
+
+    function action_click() {
+        window.location.href = "@Url.Action("IsemirIslemleri","Teknisyen")";
+    }
+
+    function treeViewItemClick(e) {
+        var item = e.itemData;
+
+    }
+</script>

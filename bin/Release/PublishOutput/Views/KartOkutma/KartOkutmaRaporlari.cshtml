@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Raporlar";
+    Layout = "_EmptyLayout.cshtml";
+}
+<style>
+    .widget-container {
+        margin-right: 320px;
+        padding: 20px;
+        max-width: 550px;
+        min-width: 300px;
+    }
+
+    #formx {
+        margin-top: 25px;
+    }
+
+    .options {
+        padding: 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 400px;
+        top: 0;
+        background-color: #f5f5f5;
+    }
+
+    .caption {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .option {
+        font-size: 12px;
+        margin-top: 10px;
+    }
+</style>
+
+<script>
+    function getGrid(objectName) { return $("#" + objectName).dxDataGrid("instance"); }
+    function getPopup(objectName) { return $("#" + objectName).dxPopup("instance"); }
+    function getWait() { return $("#loadPanel").dxLoadPanel("instance"); }
+    function getCombo(objectName) { return $("#" + objectName).dxSelectBox("instance"); }
+    function getDate(objectName) { return $("#" + objectName).dxDateBox("instance"); }
+    function openWait() { getWait().option("visible", true); }
+    function closeWait() { getWait().option("visible", false); }
+    function openPopup(popupName, title) {
+        var popup = getPopup(popupName);
+        if (popup != null) {
+            popup.option("title", title);
+            popup.option("visible", true);
+        }
+    }
+</script>
+
+@(Html.DevExtreme().LoadPanel()
+        .ID("loadPanel")
+        .Message("Lütfen Bekleyin ...")
+        .CloseOnOutsideClick(false)
+        .Visible(false)
+)
+
+@(Html.DevExtreme().Popup()
+        .Title("Pdf")
+        .Width("95%")
+        //.MaxHeight("98%")
+        .Height("98%")
+        .ID("popupPdfView")
+        .Visible(false)
+        .ContentTemplate(
+        @<text>
+        <iframe id="pdfViewer" width="100%" height="100%" frameborder="0" src=""></iframe>
+        </text>
+            )
+)
+
+<div id="form-demo">
+    <div class="options">
+        <div class="caption">Kart Okutma Raporları</div>
+        <div class="option">
+            <span>Rapor Tipi</span>
+            @(Html.DevExtreme().SelectBox()
+                    .ValueExpr("Id")
+                    .DisplayExpr("Text")
+                    .ID("cmbReports")
+                    .OnValueChanged("cmbReports_valueChanged")
+            )
+        </div>
+        <div id="reportElements"></div>
+        <div id="reportScripts"></div>
+        <div class="option">
+            <button id="btnExecute" style="width:100%" onclick="btnExecute_onclick()">Rapor</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready()
+    {
+        action("KartOkutma", "GetKartOkutmaRaporlari", null, function (res) {
+            if (res.Ok) {
+                getCombo("cmbReports").option("dataSource", res.Data);
+            }
+        }
+        );
+    }
+
+    function cmbReports_valueChanged(data) {
+        jQuery.data(document.body, "SelectedReportKey", data.value);
+        action("KartOkutma", "GetReportDetails", { reportKey: data.value }, function (res) {
+            if (res.Ok) {
+                $("#reportElements").html(res.Data.HtmlString);
+                $("#reportScripts").html(res.Data.JsString);
+                jQuery.data(document.body, "ReportParameterNames", res.Data.ParameterNames);
+            }
+        }
+        );
+    }
+
+    function btnExecute_onclick() {
+        var parameters = jQuery.data(document.body, "ReportParameterNames").split(",");
+        var parametersJson = "";
+        if (parameters.length > 0)
+        {
+            parametersJson = "{";
+            $.each(parameters, function (index, prm) {
+                var objvalue = jQuery.data(document.body, prm + '_value');
+                parametersJson += "'" + prm + "':" + "'" + objvalue + "'";
+                if (index < parameters.length - 1)
+                    parametersJson += ",";
+            });
+            parametersJson += "}";
+        }
+        openWait();
+        action("KartOkutma", "ExecuteReport", { reportKey: jQuery.data(document.body, "SelectedReportKey"), parameters: parametersJson }, function (res) {
+            closeWait();
+            if (res.Ok) {
+                openPopup("popupPdfView", "Pdf");
+                $("#pdfViewer").attr("src", res.Data.PdfFile);
+            }
+        }
+        );
+    }
+</script>

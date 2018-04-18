@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Teknisyen/EmptyLayout.cshtml";
+    ViewData["Title"] = "Teknisyen Giriş";
+}
+
+<head>
+    @*<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />*@
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/login.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    </environment>
+</head>
+
+<div class="modal-dialog">
+    <div class="loginmodal-container">
+        <h1>Teknisyen</h1><br>
+        <form>
+            <input type="text" name="user" placeholder="Kullanıcı veya E-Posta">
+            <input type="password" name="pass" placeholder="Şifre">
+            <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+        </form>
+    </div>
+</div>

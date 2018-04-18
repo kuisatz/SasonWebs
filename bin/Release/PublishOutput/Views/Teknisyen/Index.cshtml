@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Teknisyen";
+    Layout = "~/Views/Teknisyen/EmptyLayout.cshtml";
+}
+
+<h2>@ViewData["Test"]</h2>
+
+<p id="demo">Info</p>
+
+@*<button id="btnDemo" onclick="myFunction()" class="btn btn-danger">Test</button>*@
+
+@*<div id="loginContainer">
+        <input id="txtUserName" type="text" class="form-control" placeholder="Email" required autofocus>
+        <input id="txtUserPass" type="password" class="form-control" placeholder="Password" required>
+        <button id="btnLogin" type="button" class="btn btn-lg btn-primary btn-block" onclick="loginUser()">
+            Giriş
+        </button>
+    </div>*@
+
+<button type="button" class="btn btn-primary" onclick="waitingDialog.show('Lütfen Bekleyin');">Show Waiting Dialog</button>
+<button type="button" class="btn btn-primary" onclick="waitingDialog.hide();">Hide Waiting Dialog</button>
+
+<script>
+    function myFunction()
+    {
+        //debugger;
+        MyMessage();
+
+        myApp.showPleaseWait();
+        $("#demo").html("benimki");
+
+        //var params = {
+        //    UserName: $("#txtUserName").val(),
+        //    Password: $("#txtUserPass").val()
+        //};
+
+        //var params = {
+        //    UserName = "Mustafa",
+        //    Password = "abcdef"
+        //}
+
+
+
+    }
+</script>
+
+@*$(document).ready(function(){
+        $("p").click(function(){
+            $(this).hide();
+        });
+    });*@

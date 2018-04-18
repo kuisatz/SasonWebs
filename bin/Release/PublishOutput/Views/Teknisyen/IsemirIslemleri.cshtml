@@ -1,0 +1,472 @@
+﻿@{
+    ViewData["Title"] = "İş Emir İşlemler";
+    Layout = "~/Views/Teknisyen/_TeknisyenMenuLayout.cshtml";
+}
+
+@{
+    var dgIsEmirler = Html.DevExtreme().DataGrid();
+    var dgIslemler = Html.DevExtreme().DataGrid();
+    //var dgIsEmirIslemler = Html.DevExtreme().DataGrid();
+}
+
+<script>
+    function addImageColum(container, options) { $("<div><img src='" + options.value + "' alt=''/> </div>").appendTo(container); }
+</script>
+
+@(dgIsEmirler
+    .ID("grdIsEmirler")
+    .FilterRow(filterRow => filterRow
+        .Visible(false)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+        .Placeholder("Search...")
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Height("100%")
+    .DataSource(d => d.WebApi().Controller("IsEmirleri").Key("ID"))
+    .Paging(page =>
+    {
+        page.PageSize(17);
+    })
+    .Columns(columns =>
+    {
+        columns.Add().DataField("TeknisyenDurumResim")
+            .Caption("Teknisyen Durumu")
+            .Width(50)
+            .CellTemplate(new JS("addImageColum"));
+        columns.Add().DataField("IsEmirNo").Caption("İş Emir No").Width(150);
+        columns.Add().DataField("AracPlaka").Caption("Plaka").Width(100);
+        //columns.Add().DataField("AracSaseNo").Caption("Şase No");
+        columns.Add().DataField("Aciklama").Caption("Açıklama");
+        columns.Add().DataField("KayitTarihiStr").Caption("İş.Emir.Tar.").Width(150).Alignment(HorizontalAlignment.Center);
+        columns.Add().DataField("IlkHareketTarihiStr").Caption("İlk.İşç.Tar").AllowHeaderFiltering(false).Width(150).Alignment(HorizontalAlignment.Center);
+        columns.Add().DataField("SonHareketTarihiStr").Caption("Son.İşç.Tar").AllowHeaderFiltering(false).Width(150).Alignment(HorizontalAlignment.Center);
+        columns.Add().DataField("PlanlananSureStr").Caption("Plan.").AllowHeaderFiltering(false).Width(80).Alignment(HorizontalAlignment.Center);
+        columns.Add().DataField("TeknisyenSureStr").Caption("Siz.Süre").AllowHeaderFiltering(false).Width(80).Alignment(HorizontalAlignment.Center);
+        columns.Add().DataField("CalisilanSureStr").Caption("Top.Çal.").AllowHeaderFiltering(false).Width(80).Alignment(HorizontalAlignment.Center);
+    })
+    .OnRowPrepared("onGrdIsEmirlerOnRowPrepared")
+    .Selection(s => s.Mode(SelectionMode.Single))
+    .OnSelectionChanged(@<text>
+            function(e) {
+            e.component.collapseAll(-1);
+            e.component.expandRow(e.currentSelectedRowKeys[0]);
+            }
+    </text>)
+    .OnRowClick("onGrdIsEmirlerRow_click")
+    .HoverStateEnabled(true)
+    .MasterDetail(md =>
+    {
+    md.Enabled(true);
+    md.Template(@<text>
+    <div class="internal-grid-container">
+        <div><%= data.AracPlaka %> - <%= data.IsEmirNo %>'s İşlemleri:</div>
+        @(dgIslemler
+                .ID("grdIsEmirIslemler")
+                .ElementAttr(new Dictionary<string, object>().setd("class", "internal-grid"))
+                .ColumnAutoWidth(true)
+                .ShowBorders(true)
+                .OnRowClick("onGrdIsEmirIslemlerRow_click")
+                .Columns(columns =>
+                {
+                    columns.Add().DataField("TeknisyenDurumResim")
+                        .Caption("Teknisyen Durumu")
+                        .Width(50)
+                        .CellTemplate(new JS("addImageColum"));
+
+                    columns.Add().DataField("ACIKLAMA").Caption("Açıklama");
+                    columns.Add().DataField("ToplamIscilikSayisi").Caption("Toplam İşçilik Sayısı");
+                    columns.Add().DataField("PlanlananSureStr").Caption("Planlanan Süre").Alignment(HorizontalAlignment.Center);
+                    columns.Add().DataField("TeknisyenSureStr").Caption("Siz.Süre").Alignment(HorizontalAlignment.Center);
+                    columns.Add().DataField("CalisilanSureStr").Caption("Çalışılan Süre").Alignment(HorizontalAlignment.Center);
+                })
+                .DataSource(d => d.WebApi()
+                    .Controller("IsEmirleri")
+                    .LoadAction("IsEmirIslemler")
+                    .LoadParams(new { id = new JS("data.ID") })
+                    .Key("ID")
+                )
+                .Selection(s => s.Mode(SelectionMode.Single))
+        )
+    </div></text>);
+    })
+)
+
+@(Html.DevExtreme().Popup()
+    .Title("İş Emir Detayları")
+    .ID("popupIsEmirIslemIscilikler")
+    .MaxWidth(1000)
+    .MaxHeight(600)
+    .Visible(false)
+    .ContentTemplate(@<text>
+    @(Html.DevExtreme().DataGrid()
+            .ID("grdIsEmirIslemIscilikler")
+            .Width("100%")
+            .Height("100%")
+            .ShowRowLines(true)
+            .DataSource(d => d.WebApi().Controller("IsEmirleri").LoadAction("IsEmirIslemIscilikler")
+                                .LoadParams(new { id = new JS("function(){return jQuery.data(document.body, 'SelectedIsEmirIslemId');}") })
+                                .Key("ID"))
+            .Columns(columns =>
+            {
+                columns.Add().DataField("TeknisyenDurumResim")
+                    .Caption("Teknisyen Durumu")
+                    .Width(50)
+                    .CellTemplate(new JS("addImageColum"));
+
+                columns.Add().DataField("Aciklama").Caption("Açıklama").Width(700);
+                //columns.Add().DataField("Iscilik_Dakika_Suresi").Caption("Süre (Dakika)");//.Width(100);
+                //columns.Add().DataField("ToplamCalisilanZaman").Caption("Toplam Çalışılan (Dakika)");
+                columns.Add().DataField("PlanlananSureStr").Caption("Planlanan Süre").Alignment(HorizontalAlignment.Center);
+                columns.Add().DataField("TeknisyenSureStr").Caption("Siz.Süre").Alignment(HorizontalAlignment.Center);
+                columns.Add().DataField("CalisilanSureStr").Caption("Çalışılan Süre").Alignment(HorizontalAlignment.Center);
+            })
+            .OnRowClick("onGrdIsEmirIslemIscilikler_click")
+            .HoverStateEnabled(true)
+            .Selection(s => s.Mode(SelectionMode.Single))
+    )
+    </text>)
+)
+
+@(Html.DevExtreme().Popup()
+    .Title("Seçim")
+    .MaxWidth(600)
+    .MaxHeight(400)
+    .ID("popupHareketNedenler")
+    .Visible(false)
+    .ContentTemplate(@<text>
+    @(Html.DevExtreme().DataGrid()
+            .ID("grdHareketNedenler")
+            .Height("70%")
+            .DataSource(d => d.WebApi().Controller("IsEmirleri").LoadAction("GetTeknisyenNedenler")
+                        .LoadParams(new
+                        {
+                            isEmirIscilikId = new JS("function(){return jQuery.data(document.body, 'SelectedIsEmirIslemIscilikId');}"),
+                            targetTeknisyenHareketId = new JS("function(){return jQuery.data(document.body, 'TargetTekHareketId');}")
+                        })
+                        .Key("ID"))
+            //.DataSource(d => d.WebApi().Controller("IsEmirleri").LoadAction("GetTeknisyenNedenler").LoadParams(new { gc = new JS("function(){return getGcForNeden();}") }).Key("Id"))
+            .Columns(columns =>
+            {
+                columns.Add().DataField("NedenResim")
+                    .Caption("")
+                    .Width(50)
+                    .CellTemplate(new JS("addImageColum"));
+                columns.Add().DataField("KOD").Caption("Kod");
+                columns.Add().DataField("TANIM").Caption("Neden");
+            })
+            .OnRowClick("onGrdHareketNedenlerRow_click")
+            .HoverStateEnabled(true)
+            .Selection(s => s.Mode(SelectionMode.Single))
+    )
+    @(Html.DevExtreme().Button()
+        .ID("btnOk")
+        .Text("Tamam")
+        .Disabled(false)
+        .OnClick("btnOk_click")
+    )
+    </text>)
+)
+
+@(Html.DevExtreme().LoadPanel()
+    .ID("loadPanel")
+    .Message("Lütfen Bekleyin ...")
+    .CloseOnOutsideClick(false)
+    .Visible(false)
+)
+
+
+@(Html.DevExtreme().Popup()
+    .Title("Pdf Viewer")
+    .MaxWidth(600)
+    .MaxHeight(400)
+    .ID("popupPdfView")
+    .Visible(false)
+    .ContentTemplate(
+                        @<text>
+                        <iframe id="ifPdf" width="100%" height="100%" frameborder="0" src="/rpt_94_26.pdf"></iframe>
+                        </text>
+                    )
+)
+
+<script>
+
+    //grdIsEmirler
+    function onGrdIsEmirlerRow_click(a) {
+        var selectedIsEmirId = a.data.ID;
+        jQuery.data(document.body, "SelectedIsEmirId", selectedIsEmirId);
+
+        //getGrid("grdIsEmirler");
+        //openPopup("popupPdfView","dfd");
+    }
+
+    //grdIsEmirIslemler
+    function onGrdIsEmirIslemlerRow_click(a) {
+        var selectedIsEmirIslemId = a.data.ID;
+        jQuery.data(document.body, "SelectedIsEmirIslemId", selectedIsEmirIslemId);
+        if (a.data.ToplamIscilikSayisi > 0) {
+            openPopup("popupIsEmirIslemIscilikler", "İşçilikler");
+            getGrid("grdIsEmirIslemIscilikler").refresh();
+        }
+    }
+
+    //grdIsEmirIslemIscilikler
+    function onGrdIsEmirIslemIscilikler_click(a) {
+        var selectedIsEmirIslemIscilikId = a.data.ID;
+        jQuery.data(document.body, "SelectedIsEmirIslemIscilikId", selectedIsEmirIslemIscilikId);
+
+
+        //var iscilikResult = iscilikSorgula(selectedIsEmirIslemIscilikId);
+        //if (iscilikResult != null){
+        //    if (iscilikResult.DevamEdebilir == true){
+
+
+        //    }
+        //    else {
+
+        //    }
+        //}
+
+        openWait();
+
+        var queryData = getQueryData();
+        action("IsEmirleri", "IsEmirIslemIscilikSorgula", queryData,
+            function (res) {
+                if (res.Ok) {
+                    //jQuery.data(document.body, "TargetTekHareketId", res.Data.TargetHareketId);
+                    openPopup("popupHareketNedenler", "Neden");
+                    getGrid("grdHareketNedenler").refresh();
+                }
+                else {
+                    DevExpress.ui.dialog.alert(res.Exception, "Uyarı / Hata");
+                }
+                closeWait();
+            }
+        )
+    }
+
+    //grdHareketNedenler
+    function onGrdHareketNedenlerRow_click(a) {
+        var selectedHareketNedenId = a.data.ID;
+        jQuery.data(document.body, "SelectedHareketNedenId", selectedHareketNedenId);
+        jQuery.data(document.body, "SelectedHareketNedenHareketTipi", a.data.HAREKETTIPI);
+    }
+
+    function btnOk_click() {
+        var queryData = getQueryData();
+        queryData.NedenId = jQuery.data(document.body, 'SelectedHareketNedenId');
+        queryData.HareketTipi = jQuery.data(document.body, "SelectedHareketNedenHareketTipi");
+        action("IsEmirleri", "UpdateTeknisyenHareket", queryData, function (res) {
+            if (res.Ok) {
+                //debugger;
+                var grd = getGrid("grdIsEmirIslemIscilikler");
+                var key = grd.getSelectedRowKeys()[0];
+                var index = grd.getRowIndexByKey(key);
+                grd.cellValue(index, "TeknisyenDurumResim", "../images/refresh.png");
+                closePopup("popupHareketNedenler");
+
+                location.reload();
+
+                //DevExpress.ui.dialog.alert("İşleminiz Başarılı. Kartınızı Alabilirsiniz", "Uyarı");
+                //$("#ccc").html(res);
+            }
+            else {
+                DevExpress.ui.dialog.alert(res.Exception, "Uyarı / Hata");
+            }
+        }
+        );
+    }
+
+
+
+
+    function onGrdIsEmirlerOnRowPrepared(info) {
+
+        //debugger;
+        //Sakın Silme
+        //if (info.data.year > 1800 && info.data.year <= 1900)
+        //    info.rowElement.addClass("nineteenthCentury");
+    }
+
+
+
+
+
+
+    function iscilikSorgula(isEmirIslemIscilikId) {
+
+        actionSync("IsEmirleri", "GetIscilikState", queryData,
+            function (res) {
+                //debugger;
+                if (ret.Ok)
+                    return ret.Data;
+                else {
+                    DevExpress.ui.dialog.alert(res.Exception, "Uyarı / Hata");
+                }
+            }
+        )
+        return null;
+    }
+
+
+
+
+    function getQueryData() {
+        return {
+            IsEmirId: jQuery.data(document.body, "SelectedIsEmirId"),
+            IsEmirIslemId: jQuery.data(document.body, "SelectedIsEmirIslemId"),
+            IsEmirIslemIscilikId: jQuery.data(document.body, "SelectedIsEmirIslemIscilikId"),
+            NedenId: 0,
+            HareketTipi: 0,
+        };
+    }
+
+    function openWait() { getWait().option("visible", true); }
+    function closeWait() { getWait().option("visible", false); }
+
+    function openPopup(popupName, title) {
+        var popup = getPopup(popupName);
+        if (popup != null) {
+            popup.option("title", title);
+            popup.option("visible", true);
+        }
+    }
+
+    function closePopup(popupName) {
+        var popup = getPopup(popupName);
+        if (popup != null) {
+            popup.option("visible", false);
+        }
+    }
+
+
+    function getGridSelectedRowData(gridName) {
+        var grid = getGrid(gridName);
+        if (grid != null)
+            return grid.getSelectedRowsData()[0];
+        else
+            return null;
+    }
+
+    function getGrid(objectName) { return $("#" + objectName).dxDataGrid("instance"); }
+    function getPopup(objectName) { return $("#" + objectName).dxPopup("instance"); }
+    function getWait() { return $("#loadPanel").dxLoadPanel("instance"); }
+
+
+
+
+    /*
+        function onGrdIsEmirRow_click(a) {
+        jQuery.data(document.body, "SelectedIsEmirId", a.data.ID);
+        //debugger;
+        //var key = a.data.ID;
+        //var treeList = $("#grdIsEmirler").dxDataGrid("instance");
+        //if (treeList.isRowExpanded(key)) {
+        //    treeList.collapseRow(key);
+        //} else {
+        //    treeList.expandRow(key);
+        //}
+    }
+
+            //debugger;
+
+        //alert(a.data.ID + '_' + a.data.ACIKLAMA);
+        //var key = a.data.ID;
+        //var treeList = $("#grdIsEmirIslemler").dxDataGrid("instance");
+        //if (treeList.isRowExpanded(key)) {
+        //    treeList.collapseRow(key);
+        //} else {
+        //    treeList.expandRow(key);
+        //}
+
+
+
+        //var textBox = $("#txtIsEmirIslem").dxTextBox("instance");
+    //textBox.option('value', a.data.ID);
+
+
+       //function getQueryData() {
+    //    //debugger;
+
+    //    var gridIsEmir                = $("#grdIsEmirler").dxDataGrid("instance");
+    //    var gridIsEmirIslemler        = $("#grdIsEmirIslemler").dxDataGrid("instance");
+    //    var gridIsEmirIslemIscilikler = $("#grdIsEmirIslemIscilikler").dxDataGrid("instance");
+
+    //    var isEmirData      = gridIsEmir.getSelectedRowsData()[0];
+    //    var isEmirIslemData = gridIsEmirIslemler.getSelectedRowsData()[0];
+    //    var iscilikData     = gridIsEmirIslemIscilikler.getSelectedRowsData()[0];
+
+    //    var isEmirId = 0;
+    //    var isEmirIslemId = 0;
+    //    var isEmirIslemIscilikId = 0;
+
+    //    if (jQuery.isEmptyObject(gridIsEmir) == false)
+    //        isEmirId = gridIsEmir.getSelectedRowsData()[0].ID;
+    //    if (jQuery.isEmptyObject(gridIsEmirIslemler) == false)
+    //        isEmirIslemId = gridIsEmirIslemler.getSelectedRowsData()[0].ID;
+    //    if (jQuery.isEmptyObject(gridIsEmirIslemIscilikler) == false)
+    //        isEmirIslemIscilikId = gridIsEmirIslemIscilikler.getSelectedRowsData()[0].ID;
+
+    //    var data = {
+    //        IsEmirId: isEmirId,
+    //        IsEmirIslemId: isEmirIslemId,
+    //        IsEmirIslemIscilikId: isEmirIslemIscilikId,
+    //        NedenId: 0,
+    //        HareketTipi :0,
+    //    }
+
+    //    return data;
+    //}
+
+
+
+
+
+
+
+    //function getAktifUstBilgiInfo()
+    //{
+    //    return {
+    //        IsEmirId: getGridSelectedRowData("grdIsEmirler").ID,
+    //        IsEmirIslemId: getGridSelectedRowData("grdIsEmirIslemler").ID,
+    //        IsEmirIslemIscilikId: getGridSelectedRowData("grdIsEmirIslemIscilikler").ID,
+    //    };
+    //}
+
+
+
+       //function GetTeknisyenSonHareket() {
+    //    var queryData = getQueryData();
+    //    action("Teknisyen", "GetTeknisyenSonHareket", queryData, function (res) {
+    //        if (res.Ok) {
+
+    //        }
+    //    }
+    //}
+
+    //function getSelectedIsEmirRowData() {
+
+    //}
+
+
+    //function getAktifIsEmirId() {
+    //    return $("#grdIsEmirler").dxDataGrid("instance").getSelectedRowsData()[0];
+    //}
+    //function getAktifIsEmirIslemId() {
+    //    var gridIsEmirIslemler = $("#grdIsEmirIslemler").dxDataGrid("instance");
+    //    if (gridIsEmirIslemler === null)
+    //        return 0;
+    //    else
+    //        gridIsEmirIslemler.getSelectedRowsData()[0];
+    //}
+
+
+
+    */
+
+
+
+</script>

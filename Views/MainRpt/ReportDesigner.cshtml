@@ -1,0 +1,32 @@
+﻿@model SasonWebs.Models.ReportDesignerModel
+@{
+    ViewData["Title"] = "Report Designer";
+}
+<h2>@ViewData["Title"].</h2>
+@section Scripts {
+    <link rel="stylesheet" href="~/lib/xtrareportsjs/css/report-designer-light.min.css" />
+    <script type="text/html" src="~/lib/xtrareportsjs/html/report-designer.html"></script>
+    <script src="~/lib/xtrareportsjs/js/report-designer.min.js"></script>
+    <script src="~/js/reportDesignerInitializer.js"></script>
+    <script type="text/javascript">
+            @*Initialize the client-side Report Designer.
+              The initializeReportDesigner function is defined in ~/js/reportDesignerInitializer.js*@
+        (function initialize() { setTimeout(function () { window.initializeReportDesigner(@Html.Raw(Model.ModelJson)); }, 1);})()
+    </script>
+}
+<style>
+    .DesignerContainer {
+        height: 800px;
+        width: 100%;
+    }
+</style>
+
+<div class="DesignerContainer" id="ReportDesignerElement">
+    <div class="dx-designer" data-bind="template: 'dxrd-designer'"></div>
+</div>
+
+<div id="htmlTemplates">
+    @*Insert the Report Designer HTML template into the view.*@
+    @Html.Raw(Model.HtmlTemplates)
+    @*@(new HtmlString(Html, Model.HtmlTemplates))*@
+</div>

@@ -1,0 +1,166 @@
+﻿<SOAP:Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP:Header></SOAP:Header>
+  <SOAP:Body>
+    <ns0:MT_ClaimStatus_Resp xmlns="http://man.eu/ClaimsAndWarranty" xmlns:ns0="http://man.eu/ClaimsAndWarranty">
+      <DMS_Header>
+        <Client>002</Client>
+        <PartnerCode>R518</PartnerCode>
+        <CustomerNum>004000820</CustomerNum>
+        <DMSToken>1508165154439</DMSToken>
+        <UserName>q5387</UserName>
+        <SalesOrg>TR0S</SalesOrg>
+        <LangKey>TR</LangKey>
+        <ISServerID>ISTR0</ISServerID>
+        <DMSSystemID>SW-ESASON-PROD</DMSSystemID>
+        <DMSVersion>2015.04.00</DMSVersion>
+        <EOIWTYVersion>1.2</EOIWTYVersion>
+        <UserID>q5387</UserID>
+        <ISServiceID>REQ_CLAIMSTATUS</ISServiceID>
+      </DMS_Header>
+      <ClaimHeader>
+        <ClaimNo>000237910621</ClaimNo>
+        <ClaimType>ZC02</ClaimType>
+        <CreationDate>20170930</CreationDate>
+        <DMSReferenceNo>518290817133-1</DMSReferenceNo>
+        <VIN>WMA06SZZ3FP066282</VIN>
+        <ClaimStatus>Z057</ClaimStatus>
+        <CustomerNo>0004000820</CustomerNo>
+        <CustomerName>Mapar Otomotiv San. ve Tic. Lt</CustomerName>
+        <PartnerCode>R518</PartnerCode>
+        <PARTKZLG>R001</PARTKZLG>
+        <DMSOrderNo>518290817133</DMSOrderNo>
+        <DMSJobNo>001</DMSJobNo>
+        <DMSSystemID>SW-ESASON-PROD</DMSSystemID>
+        <DMSMisc>ARACIN ÖN BALATALARI KONTROL EDILECEK</DMSMisc>
+        <CLOSED>00000000</CLOSED>
+        <ClaimDate>20170829</ClaimDate>
+        <HeaderText>GA ONLINE CLAIM</HeaderText>
+        <VALIC>160.38 </VALIC>
+        <HeaderGuid>005056866D981ED7A9B71FACEE1DBBE3</HeaderGuid>
+        <Versions>
+          <Version>0001</Version>
+          <Category>IC</Category>
+          <CustomerNo>0004000820</CustomerNo>
+          <Currency>EUR</Currency>
+          <PricingDate>20170829</PricingDate>
+          <FirstRegDate>20160125</FirstRegDate>
+          <RepairBegin>20170829</RepairBegin>
+          <RepairEnd>20170829</RepairEnd>
+          <WarrantyBegin>20160125</WarrantyBegin>
+          <DefectCodeDetails>
+            <ObjectCode1>508</ObjectCode1>
+            <ObjectCode2>A</ObjectCode2>
+            <ObjectCode3>110</ObjectCode3>
+            <Version>W0</Version>
+            <Location>BS</Location>
+            <Defect>T7</Defect>
+          </DefectCodeDetails>
+          <MeasReadingUnit>KM</MeasReadingUnit>
+          <MeasReading>0128546</MeasReading>
+          <ComplainDate>00000000</ComplainDate>
+          <VehicleBreakdown>N</VehicleBreakdown>
+          <VersionGuid>005056866D981ED7A9B71FACEE1DFBE3</VersionGuid>
+          <HeaderGuid>005056866D981ED7A9B71FACEE1DBBE3</HeaderGuid>
+          <VersionItems>
+            <ItemNo>000001</ItemNo>
+            <ItemType>FR</ItemType>
+            <ItemKey>508A110450W0BS000</ItemKey>
+            <Quantity>14.000 </Quantity>
+            <LabourCodeDetails>
+              <ObjectCode1>508</ObjectCode1>
+              <ObjectCode2>A</ObjectCode2>
+              <ObjectCode3>110</ObjectCode3>
+              <Activity>450</Activity>
+              <Version>W0</Version>
+              <Location>BS</Location>
+              <Condition>00</Condition>
+              <WorkType>0</WorkType>
+            </LabourCodeDetails>
+            <Unit>AW</Unit>
+            <ItemText>Disk fren fren balatasi Sol+sag Yenileme On aks</ItemText>
+            <ValIC>35.00 </ValIC>
+            <ValOC>0.00 </ValOC>
+            <DMSPosNo>000000</DMSPosNo>
+            <ItemGuid>005056866D981ED7A9B71FACEE1E1BE3</ItemGuid>
+            <VersionGuid>005056866D981ED7A9B71FACEE1DFBE3</VersionGuid>
+          </VersionItems>
+          <VersionItems>
+            <ItemNo>000002</ItemNo>
+            <ItemType>MAT</ItemType>
+            <ItemKey>81508206066</ItemKey>
+            <Quantity>1.000 </Quantity>
+            <DefectPart>P</DefectPart>
+            <ItemText>DISK FREN BALATA TAKIMI JURID 539-20/22,</ItemText>
+            <ValIC>125.38 </ValIC>
+            <ValOC>0.00 </ValOC>
+            <DMSPosNo>000000</DMSPosNo>
+            <ItemGuid>005056866D981ED7A9B71FACEE1E3BE3</ItemGuid>
+            <VersionGuid>005056866D981ED7A9B71FACEE1DFBE3</VersionGuid>
+          </VersionItems>
+        </Versions>
+        <Versions>
+          <Version>0002</Version>
+          <Category>OC</Category>
+          <CustomerNo>0004000820</CustomerNo>
+          <Currency>EUR</Currency>
+          <PricingDate>20170829</PricingDate>
+          <FirstRegDate>20160125</FirstRegDate>
+          <RepairBegin>20170829</RepairBegin>
+          <RepairEnd>20170829</RepairEnd>
+          <WarrantyBegin>20160125</WarrantyBegin>
+          <DefectCodeDetails>
+            <ObjectCode1>508</ObjectCode1>
+            <ObjectCode2>A</ObjectCode2>
+            <ObjectCode3>110</ObjectCode3>
+            <Version>W0</Version>
+            <Location>BS</Location>
+            <Defect>T7</Defect>
+          </DefectCodeDetails>
+          <MeasReadingUnit>KM</MeasReadingUnit>
+          <MeasReading>0128546</MeasReading>
+          <ComplainDate>00000000</ComplainDate>
+          <VehicleBreakdown>N</VehicleBreakdown>
+          <VersionGuid>00505698CE351EE7AAB5FDAD29E8955F</VersionGuid>
+          <HeaderGuid>005056866D981ED7A9B71FACEE1DBBE3</HeaderGuid>
+          <VersionItems>
+            <ItemNo>000001</ItemNo>
+            <ItemType>FR</ItemType>
+            <ItemKey>508A110450W0BS000</ItemKey>
+            <Quantity>14.000 </Quantity>
+            <LabourCodeDetails>
+              <ObjectCode1>508</ObjectCode1>
+              <ObjectCode2>A</ObjectCode2>
+              <ObjectCode3>110</ObjectCode3>
+              <Activity>450</Activity>
+              <Version>W0</Version>
+              <Location>BS</Location>
+              <Condition>00</Condition>
+              <WorkType>0</WorkType>
+            </LabourCodeDetails>
+            <Unit>AW</Unit>
+            <ItemText>Disk fren fren balatasi Sol+sag Yenileme On aks</ItemText>
+            <ValIC>35.00 </ValIC>
+            <ValOC>35.00 </ValOC>
+            <DMSPosNo>000000</DMSPosNo>
+            <ItemGuid>00505698CE351EE7AAB5FDAD29E8D55F</ItemGuid>
+            <VersionGuid>00505698CE351EE7AAB5FDAD29E8955F</VersionGuid>
+          </VersionItems>
+          <VersionItems>
+            <ItemNo>000002</ItemNo>
+            <ItemType>MAT</ItemType>
+            <ItemKey>81508206066</ItemKey>
+            <Quantity>1.000 </Quantity>
+            <Unit>SAT</Unit>
+            <DefectPart>P</DefectPart>
+            <ItemText>DISK FREN BALATA TAKIMI JURID 539-20/22,</ItemText>
+            <ValIC>125.38 </ValIC>
+            <ValOC>125.38 </ValOC>
+            <DMSPosNo>000000</DMSPosNo>
+            <ItemGuid>00505698CE351EE7AAB5FDAD29E9155F</ItemGuid>
+            <VersionGuid>00505698CE351EE7AAB5FDAD29E8955F</VersionGuid>
+          </VersionItems>
+        </Versions>
+      </ClaimHeader>
+    </ns0:MT_ClaimStatus_Resp>
+  </SOAP:Body>
+</SOAP:Envelope>

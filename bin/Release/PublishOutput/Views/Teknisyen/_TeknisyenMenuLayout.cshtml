@@ -1,0 +1,154 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SasonWebs</title>
+
+    <link rel ="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+    @*<link rel ="stylesheet" href="~/css/site.css" />
+    <link rel ="stylesheet" href="~/css/teknisyen.css" />*@
+
+    
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script src="~/js/devextreme/cldr.js"></script>
+    <script src="~/js/devextreme/cldr/event.js"></script>
+    <script src="~/js/devextreme/cldr/supplemental.js"></script>
+    <script src="~/js/devextreme/cldr/unresolved.js"></script>
+
+    <script src="~/js/devextreme/globalize.js"></script>
+    <script src="~/js/devextreme/globalize/message.js"></script>
+    <script src="~/js/devextreme/globalize/number.js"></script>
+    <script src="~/js/devextreme/globalize/currency.js"></script>
+    <script src="~/js/devextreme/globalize/date.js"></script>
+
+    @* JSZip for client side export *@
+    @*<script src="~/js/devextreme/jszip.js"></script>*@
+
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/vectormap-data/world.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+
+    @*<script src="~/js/site.js"></script>*@
+
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/teknisyen.css" />
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/teknisyen.css" />
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+
+
+
+
+
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body>
+
+
+
+    @*<environment names="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>*@
+
+
+
+
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                <a href="#" class="navbar-brand">@ViewData["TeknisyenAdi"].toString()</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+
+                    @*@(Html.DevExtreme().Menu()
+                    .ID("menu")
+                    .Items(items =>
+                    {
+                        items.Add().Text("Hide");
+                        items.Add().Text("Delete");
+                        items.Add().Text("Clipboard").Items(clipboardItems =>
+                        {
+                            clipboardItems.Add().Text("Copy text");
+                            clipboardItems.Add().Text("Clear text");
+                            clipboardItems.Add().Text("Paste text");
+                        });
+                    })
+                    )*@
+
+
+                    @*@(Html.DevExtreme().Menu()
+                                .ID("menu")
+                                .DataSource(d => d.Mvc().Controller("Teknisyen").LoadAction("GetMenu"))
+                                .HideSubmenuOnMouseLeave(false)
+                                .OnItemClick("menuItem_click")
+                    )*@
+
+
+                    @foreach (SasonWebs.MenuItem menuItem in SasonWebs.Statics.GetMenu())
+                    {
+                        {<li><a asp-area="" asp-controller="@menuItem.Controller" asp-action="@menuItem.Action">@menuItem.Text</a></li>}
+                    }
+
+                    </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br />
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @*<footer>
+        <hr />
+        <p>&copy; 2017 - SasonWebs</p>
+    </footer>*@
+
+    <script>
+        //$(document).ready(function () {
+        //    DevExpress.ui.themes.current('generic.dark');
+        //});
+        function menuItem_click(data) {
+            //debugger;
+            var item = data.itemData;
+
+            window.location.href = '@Url.Action("RunMenu","Teknisyen", new { menuId = "_id_" })'.replace('_id_', item.id);
+
+            //if (item.price) {
+            //    $("#product-details").removeClass("hidden");
+            //    $("#product-details > img").attr("src", item.icon);
+            //    $("#product-details > .price").text("$" + item.price);
+            //    $("#product-details > .name").text(item.text);
+            //}
+        }
+
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

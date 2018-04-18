@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Teknisyen";
+    Layout = "~/Views/Personel/_TeknisyenEmptyLayout.cshtml";
+}
+
+@(Html.DevExtreme().Popup()
+    .ID("popover")
+    .Title("Mesaj")
+    .Visible(true)
+    .ShowTitle(false)
+    .ContentTemplate(@<text>
+    @*<p align="center"><img src="/images/cardreader.png" alt="Mountain View" style="width:304px;height:228px;"></p>*@
+    <h1 align="center">Kartınızı Okutun</h1>
+
+    @(Html.DevExtreme().LoadPanel()
+    .ID("loadPanel")
+    .CloseOnOutsideClick(false)
+    .Visible(true)
+    .Message("Bekleniyor...")
+    )
+
+    </text>)
+)
+
+<script>
+    //$(document).ready(function(){
+
+    //    DevExpress.ui.themes.current('win10.black');
+
+    //});
+</script>
