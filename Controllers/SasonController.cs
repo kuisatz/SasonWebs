@@ -85,6 +85,24 @@ namespace SasonWebs.Controllers
 
         [HttpPost]
         [HttpGet]
+        public IActionResult GetBakimGruplariListesi()
+        {
+            using (var ap = SasonWebAppPool.CreateMask)
+            {
+                List<object> list = ap.AppPool.EbaTestConnector.CreateQuery($@"
+                       SELECT ID,KOD FROM bakimgruplar 
+                        where durumID = 1  
+                        order by kod
+                ")
+                .GetDataTable()
+                .ToModels();
+                return WmrResult(list, null);
+            }
+        }
+
+
+        [HttpPost]
+        [HttpGet]
         public IActionResult GetIsEmirHizmetYerleri()
         {
             List<object> result = new List<object>();
