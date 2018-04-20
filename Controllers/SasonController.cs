@@ -85,6 +85,25 @@ namespace SasonWebs.Controllers
 
         [HttpPost]
         [HttpGet]
+        public IActionResult GetAgregaListesi()
+        {
+            using (var ap = SasonWebAppPool.CreateMask)
+            {
+                List<object> list = ap.AppPool.EbaTestConnector.CreateQuery($@" 
+                    SELECT ID, q.AD as KOD from vw_agregalar q 
+                    where Q.DILKOD = 'Turkish' AND 
+                    q.durumID = 1  
+                    order by q.AD
+                ")
+                .GetDataTable()
+                .ToModels();
+                return WmrResult(list, null);
+            }
+        }
+
+
+        [HttpPost]
+        [HttpGet]
         public IActionResult GetBakimGruplariListesi()
         {
             using (var ap = SasonWebAppPool.CreateMask)
