@@ -31,40 +31,9 @@ namespace SasonWebs.Controllers
             using (var ap = SasonWebAppPool.CreateMask)
             {
                 decimal servisId = ap.AppPool.EbaTestConnector.CreateQuery(@"
-                              /*  SELECT s.id, i.ad
-                                    FROM vw_firmalar f, vw_kullanicilar k, servisler s, isortaklar i
-                                    WHERE f.id = k.firmaid AND k.id = {userName} AND s.id = f.servisid and i.id = s.isortakid */ 
-
-                            SELECT distinct s.id, i.ad
-                            FROM  /* vw_firmalar f, */ 
-                            ( SELECT c.ID, s.ID SERVISID
-                              FROM companies c, servisler s
-                              WHERE c.ID = s.EBAFIRMAID(+)) f, 
-                              /* vw_kullanicilar k, */ 
-                                 ( SELECT u.ID,
-                                      u.FIRSTNAME AD,
-                                      u.LASTNAME SOYAD,          
-                                      o.COMPANY FIRMAID,
-                                      s.ID SERVISID
-                                 FROM companyobjects o,
-                                      companies c,
-                                      osusers u, 
-                                      servisler s
-                                WHERE     u.TYPE = 0 
-                                      AND o.TYPE = 1
-                                      AND u.id = o.id
-                                      AND c.id = o.company
-                                      AND c.ID = s.EBAFIRMAID(+) 
-                                      ) k , 
-                                    servisler s, isortaklar i
-                            WHERE 
-                                f.id = k.firmaid AND 
-                                k.id = {userName} AND 
-                                s.id = f.servisid and 
-                                i.id = s.isortakid
-
-
-
+                        SELECT s.id, i.ad
+                            FROM vw_firmalar f, vw_kullanicilar k, servisler s, isortaklar i
+                            WHERE f.id = k.firmaid AND k.id = {userName} AND s.id = f.servisid and i.id = s.isortakid
                     ")
                     .Parameter("userName", user)
                     .GetDataTable(mr)
@@ -125,46 +94,6 @@ namespace SasonWebs.Controllers
                     where Q.DILKOD = 'Turkish' AND 
                     q.durumID = 1  
                     order by q.AD
-                ")
-                .GetDataTable()
-                .ToModels();
-                return WmrResult(list, null);
-            }
-        }
-
-        [HttpPost]
-        [HttpGet]
-        public IActionResult GetAracTipListesi()
-        {
-            using (var ap = SasonWebAppPool.CreateMask)
-            {
-                List<object> list = ap.AppPool.EbaTestConnector.CreateQuery($@" 
-                    SELECT 
-                        ID,
-                        KOD
-                    FROM SASON.ARACTIPLER
-                    WHERE durumid = 1 
-                    ORDER BY KOD
-                ")
-                .GetDataTable()
-                .ToModels();
-                return WmrResult(list, null);
-            }
-        }
-
-        [HttpPost]
-        [HttpGet]
-        public IActionResult GetAracTurListesi()
-        {
-            using (var ap = SasonWebAppPool.CreateMask)
-            {
-                List<object> list = ap.AppPool.EbaTestConnector.CreateQuery($@" 
-                    SELECT 
-                        ID,
-                        KOD
-                    FROM SASON.ARACTURLER
-                    WHERE durumid = 1 
-                    ORDER BY KOD
                 ")
                 .GetDataTable()
                 .ToModels();
